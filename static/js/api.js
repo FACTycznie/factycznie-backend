@@ -35,8 +35,6 @@ $(document).ready(function () {
   var processFound = function (result) {
     $('.criteria-spinner').hide();
 
-    console.log(result);
-
     /**
      * Criteria
      */
@@ -61,13 +59,29 @@ $(document).ready(function () {
 
     if (result['neighbours_count'] === null) {
       evalSimilar.find('.criteria-unknown').show();
+      $('#criteria-no-similar').hide();
+      $('#criteria-found-similar').hide();
     }
     else if (parseInt(result['neighbours_count']) >= 1) {
       evalSimilar.find('.criteria-true').show();
+      $('#criteria-no-similar').hide();
+      $('#criteria-found-similar').show();
     }
     else {
       evalSimilar.find('.criteria-false').show();
+      $('#criteria-no-similar').show();
+      $('#criteria-found-similar').hide();
     }
+
+    var similar = result['neighbours'];
+    $('#criteria-neighbours-list').html();
+    $.each(similar, function( index, neighbour ) {
+      var li = document.createElement("li");
+      var a = document.createElement('a');
+      a.href = neighbour[2];
+      a.innerHTML = neighbour[1];
+      li.appendChild(a);
+    });
 
     if (result['clickbait_score'] === null) {
       evalClickbaits.find('.criteria-unknown').show();
@@ -80,18 +94,26 @@ $(document).ready(function () {
     }
 
     var clickbaits = result['clickbait_spans'];
+    var clickbaits_str = "";
+    $.each(clickbaits, function( index, clickb ) {
+      if (index !== 0) {
+        clickbaits_str += ", ";
+      }
+      clickbaits_str += clickb[0];
+    });
     if (result['clickbait_score'] >= 0.66) {
       $('#clickbaits-none').show();
     }
     else if (result['clickbait_score'] >= 0.33) {
       $('#clickbaits-few').show();
+      $('#clickbait-list').text(clickbaits_str);
       $('#clickbait-list').show();
     }
     else {
       $('#clickbaits-plenty').show();
+      $('#clickbait-list').text(clickbaits_str);
       $('#clickbait-list').show();
     }
-    console.log(clickbaits);
 
     /**
      * Analyzed article
