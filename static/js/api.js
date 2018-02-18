@@ -81,6 +81,7 @@ $(document).ready(function () {
       a.href = neighbour[2];
       a.innerHTML = neighbour[1];
       li.appendChild(a);
+      $('#criteria-neighbours-list').append(li);
     });
 
     if (result['clickbait_score'] === null) {
