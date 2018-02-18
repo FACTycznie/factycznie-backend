@@ -117,36 +117,33 @@ window.onload = function() {
                 this.blob.segments[i].point.x += this.position.x;
                 this.blob.segments[i].point.y += this.position.y;
             }
-            console.log(this.blob);
-            console.log(this.blob.segments[0]);
-            console.log(this.motherPoints[0]);
-            console.log(this.blob.segments[0].point);
             this.blob.smooth();
-            this.sleep_int = 0;
+            this.randomMovementTicker = 0;
             this.randomizeMovement()
         }
 
         randomizeMovement() {
             for (var i = 0; i < this.numSegment; i ++) {
-                this.moveVectors[i].x = Math.random()*4-2;
-                this.moveVectors[i].y = Math.random()*4-2;
+                var randomConstant = 4
+                var degradationConstant = 0.9
+                this.moveVectors[i].x = this.moveVectors[i].x * degradationConstant + randomConstant*(Math.random()*2-1);
+                this.moveVectors[i].y = this.moveVectors[i].y * degradationConstant + randomConstant*(Math.random()*2-1);
             }
         }
 
         updatePath() {
             super.updatePath();
-            this.blob.fillColor = this.color;
-            this.sleep_int += 1;
             for (var i = 0; i < this.numSegment; i ++) {
                 var dist = this.blob.segments[i].point.getDistance(this.motherPoints[i])
                 var vel = 10 / (dist*dist)
-                var grav_x = (this.motherPoints[i].x - this.blob.segments[i].point.x) / (dist*dist*15)
-                var grav_y = (this.motherPoints[i].y - this.blob.segments[i].point.y) / (dist*dist*15)
+                var grav_x = (this.motherPoints[i].x - this.blob.segments[i].point.x) * dist / 10000
+                var grav_y = (this.motherPoints[i].y - this.blob.segments[i].point.y) * dist / 10000
                 this.blob.segments[i].point.x += this.moveVectors[i].x * vel + grav_x;
                 this.blob.segments[i].point.y += this.moveVectors[i].y * vel + grav_y;
             }
-            if (this.sleep_int > 10){
-                this.sleep_int = 0;
+            this.randomMovementTicker += 1;
+            if (this.randomMovementTicker > 15){
+                this.randomMovementTicker = 0;
                 this.randomizeMovement();
             }
         }
