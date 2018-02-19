@@ -19,4 +19,4 @@ class Command(BaseCommand):
                 Document.add_document_from_json(json_data)
             except:
                 pass
-        # Document.recreate_connections()
+        Document.recreate_connections()
