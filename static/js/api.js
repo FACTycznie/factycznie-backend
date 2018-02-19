@@ -74,7 +74,7 @@ $(document).ready(function () {
     }
 
     var similar = result['neighbours'];
-    $('#criteria-neighbours-list').html();
+    $('#criteria-neighbours-list').empty();
     $.each(similar, function( index, neighbour ) {
       var li = document.createElement("li");
       var a = document.createElement('a');
