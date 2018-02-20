@@ -1,12 +1,18 @@
-<div id="accordion">
+<div id="factycznie-criteria">
+  <criteria-item
+      v-for="item in criteriaList"
+      v-bind:criteria="item"
+      v-bind:key="item.id">
+  </criteria-item>
+</div>
   <div class="card">
     <div class="card-header" id="eval-author" data-toggle="collapse" data-target="#collapseAuthor">
       <h5 class="mb-0 d-flex justify-content-between">
         <span class="loader">
-          <i class="fas fa-spinner fa-pulse criteria-spinner"></i>
-          <i class="fas fa-times criteria-false"></i>
-          <i class="fas fa-check criteria-true"></i>
-          <i class="fas fa-question-circle criteria-unknown"></i>
+          <i v-if="loading" class="fas fa-spinner fa-pulse criteria-spinner"></i>
+          <i v-if="unknown" class="fas fa-times criteria-false"></i>
+          <i v-if="checked-true" class="fas fa-check criteria-true"></i>
+          <i v-if="checked-false" class="fas fa-question-circle criteria-unknown"></i>
           Autor
         </span>
         <span>
@@ -14,7 +20,7 @@
         </span>
       </h5>
     </div>
-    <div id="collapseAuthor" class="collapse collapsed" aria-labelledby="eval-author" data-parent="#accordion">
+    <div id="collapseAuthor" class="collapse collapsed" aria-labelledby="eval-author" data-parent="#factycznie-criteria">
       <div class="card-body">
         <p>
           Jeśli ktoś podpisuje się swoim nazwiskiem, nie boi się, że jego nazwisko zostanie powiązane z tekstem.
@@ -43,7 +49,7 @@
         </span>
       </h5>
     </div>
-    <div id="collapseRelevance" class="collapse collapsed" aria-labelledby="eval-relevance" data-parent="#accordion">
+    <div id="collapseRelevance" class="collapse collapsed" aria-labelledby="eval-relevance" data-parent="#factycznie-criteria">
       <div class="card-body">
         <p>
           Newsy pochodzące z poważnych serwisów informacyjnych są bardziej wiarygodne, niż te, które znajdziemy na
@@ -88,7 +94,7 @@
         </span>
       </h5>
     </div>
-    <div id="collapseSimilar" class="collapse collapsed" aria-labelledby="eval-similar" data-parent="#accordion">
+    <div id="collapseSimilar" class="collapse collapsed" aria-labelledby="eval-similar" data-parent="#factycznie-criteria">
       <div class="card-body">
         <p>
           Większość sprawdzonych informacji publikowana jest w wielu różnych mediach. Jeśli o Twoim newsie pisze kilka
@@ -120,7 +126,7 @@
         </span>
       </h5>
     </div>
-    <div id="collapseClickbaits" class="collapse collapsed" aria-labelledby="eval-clickbaits" data-parent="#accordion">
+    <div id="collapseClickbaits" class="collapse collapsed" aria-labelledby="eval-clickbaits" data-parent="#factycznie-criteria">
       <div class="card-body">
         <p>
           Sensacyjne nagłówki i wzbudzające emocje słowa obniżają wiarygodność artykułu. Mogą one być sygnałem, że
