@@ -6,8 +6,8 @@ body {
 
 h3 {
   color: #295d79;
-  margin-top: 30px;
-  margin-bottom: 20px; }
+  padding-top: 30px;
+  padding-bottom: 20px; }
 
 #fact-navbar {
   background-color: #db5864;
@@ -60,14 +60,10 @@ h3 {
   background: #8b95a4;
   border-radius: 0px;
   cursor: pointer; }
-  .card-header .criteria-spinner {
-    display: none; }
   .card-header .criteria-true {
-    color: #a4e891;
-    display: none; }
+    color: #a4e891; }
   .card-header .criteria-false {
-    color: #f89294;
-    display: none; }
+    color: #f89294; }
   .card-header h5 {
     color: #f6f6f2; }
 
@@ -77,17 +73,16 @@ h3 {
 /*******************************
  * Analizowany news
  */
-#analyzed-container {
+#analyzed-text {
   background: #ffffff;
   padding: 20px; }
-
-#analyzed-header {
-  color: #db5864;
-  padding: 20px; }
-
-#analyzed-text {
-  max-height: 50vh;
-  overflow-y: scroll; }
+  #analyzed-text h4 {
+    color: #db5864;
+    padding: 20px; }
+  #analyzed-text div {
+    max-height: 50vh;
+    overflow-y: scroll;
+    white-space: pre-wrap; }
 
 /*******************************
  * Oceń wiarygodność

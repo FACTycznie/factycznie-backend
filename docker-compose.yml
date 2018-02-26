@@ -11,8 +11,8 @@ services:
     restart: on-failure
     ports:
       - "9200:9200"
-  factcoin:
-    image: factcoin
+  factycznie_backend:
+    image: factycznie_backend
     links:
       - postgres
       - redis
@@ -36,4 +36,16 @@ services:
       - $PWD/shared:/app/shared
       - $PWD/static/js:/app/static/js
       - $PWD/static/css:/app/static/css
+    restart: on-failure
+  factcoin_frontend:
+    image: factycznie_frontend
+    links:
+      - factycznie_backend
+    ports:
+      - 5000:5000
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    environment:
+      - PORT=5000
     restart: on-failure

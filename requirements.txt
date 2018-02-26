@@ -18,12 +18,14 @@ dj-database-url==0.2.1
 djangorestframework
 django-filter
 
+django-cors-headers
+
 # search
 elasticsearch
 django-haystack
 pyelasticsearch
 
-#nlp
+# NLP
 numpy
 polyglot
 pyicu

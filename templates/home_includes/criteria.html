@@ -1,18 +1,9 @@
-<div id="factycznie-criteria">
-  <criteria-item
-      v-for="item in criteriaList"
-      v-bind:criteria="item"
-      v-bind:key="item.id">
-  </criteria-item>
-</div>
+<div id="accordion fact-criteria">
   <div class="card">
-    <div class="card-header" id="eval-author" data-toggle="collapse" data-target="#collapseAuthor">
+    <div class="card-header" id="eval-author" data-toggle="collapse" data-target="#collapse-author">
       <h5 class="mb-0 d-flex justify-content-between">
         <span class="loader">
-          <i v-if="loading" class="fas fa-spinner fa-pulse criteria-spinner"></i>
-          <i v-if="unknown" class="fas fa-times criteria-false"></i>
-          <i v-if="checked-true" class="fas fa-check criteria-true"></i>
-          <i v-if="checked-false" class="fas fa-question-circle criteria-unknown"></i>
+          <i v-bind:class="authorIcon"></i>
           Autor
         </span>
         <span>
@@ -20,7 +11,7 @@
         </span>
       </h5>
     </div>
-    <div id="collapseAuthor" class="collapse collapsed" aria-labelledby="eval-author" data-parent="#factycznie-criteria">
+    <div id="collapse-author" class="collapse collapsed" aria-labelledby="eval-author" data-parent="#fact-criteria">
       <div class="card-body">
         <p>
           Jeśli ktoś podpisuje się swoim nazwiskiem, nie boi się, że jego nazwisko zostanie powiązane z tekstem.
@@ -28,20 +19,17 @@
           wcześnej na podobne tematy.
         </p>
         <p>
-          <strong>Autor analizowanego newsa: <span id="criteria-author">BRAK</span></strong>
+          <strong>Autor analizowanego newsa: <span>[[ newsAuthorDecision ]]</span></strong>
         </p>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header" id="eval-relevance" data-toggle="collapse" data-target="#collapseRelevance">
+    <div class="card-header" id="eval-relevance" data-toggle="collapse" data-target="#collapse-relevance">
       <h5 class="mb-0 d-flex justify-content-between">
         <span>
-          <i class="fas fa-spinner fa-pulse criteria-spinner"></i>
-          <i class="fas fa-times criteria-false"></i>
-          <i class="fas fa-check criteria-true"></i>
-          <i class="fas fa-question-circle criteria-unknown"></i>
+          <i v-bind:class="sourceRelevanceStateIcon"></i>
           Istotność źródła
         </span>
         <span>
@@ -49,7 +37,7 @@
         </span>
       </h5>
     </div>
-    <div id="collapseRelevance" class="collapse collapsed" aria-labelledby="eval-relevance" data-parent="#factycznie-criteria">
+    <div id="collapse-relevance" class="collapse collapsed" aria-labelledby="eval-relevance" data-parent="#fact-criteria">
       <div class="card-body">
         <p>
           Newsy pochodzące z poważnych serwisów informacyjnych są bardziej wiarygodne, niż te, które znajdziemy na
@@ -57,36 +45,17 @@
           kategorii określających jego jakość: nieznane źródło, niepewne źródło, przyzwoite źródło, zaufane źródło.
         </p>
         <p>
-          <strong>Istotność źródła: <span>NIEZNANE ŹRÓDŁO</span></strong> <br>
-          Brak danych w systemie na temat podanego źródła.
-        </p>
-        <p>
-          <strong>Istotność źródła: <span>NIEPEWNE ŹRÓDŁO</span></strong> <br>
-          News, który sprawdzasz pochodzi z portalu, na którym można znaleźć fake-newsy lub clickbaity
-          (wniosek na podstawie [X] przeanalizowanych newsów).
-        </p>
-        <p>
-          <strong>Istotność źródła: <span>PRZYZWOITE ŹRÓDŁO</span></strong> <br>
-          News, który sprawdzasz pochodzi z portalu, który przeważnie zawiera wiarygodne informacje,
-          jednak można na nim czasem znaleźć artykuły o wątpliwej jakości (wniosek na podstawie [X] przeanalizowanych newsów).
-        </p>
-        <p>
-          <strong>Istotność źródła: <span>ZAUFANE ŹRÓDŁO</span></strong> <br>
-          News, który sprawdzasz pochodzi z portalu, który oceniany jest jako źródło wiarygodnych informacji
-          (wniosek na podstawie [X] przeanalizowanych newsów).
+          <strong>Istotność źródła: <span>[[ sourceRelevance ]]</span></strong> <br>
         </p>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-header" id="eval-similar" data-toggle="collapse" data-target="#collapseSimilar">
+    <div class="card-header" id="eval-similar" data-toggle="collapse" data-target="#collapse-similar">
       <h5 class="mb-0 d-flex justify-content-between">
         <span>
-          <i class="fas fa-spinner fa-pulse criteria-spinner"></i>
-          <i class="fas fa-times criteria-false"></i>
-          <i class="fas fa-check criteria-true"></i>
-          <i class="fas fa-question-circle criteria-unknown"></i>
+          <i v-bind:class="similarNewsStateIcon"></i>
           Podobne newsy
         </span>
         <span>
@@ -94,17 +63,19 @@
         </span>
       </h5>
     </div>
-    <div id="collapseSimilar" class="collapse collapsed" aria-labelledby="eval-similar" data-parent="#factycznie-criteria">
+    <div id="collapse-similar" class="collapse collapsed" aria-labelledby="eval-similar" data-parent="#fact-criteria">
       <div class="card-body">
         <p>
           Większość sprawdzonych informacji publikowana jest w wielu różnych mediach. Jeśli o Twoim newsie pisze kilka
           portali, to istnieje większa szansa, że informacje, które zawiera są sprawdzone. Pamiętaj jednak, że należy
           krytycznie spojrzeć na to, jakie portale piszą o Twoim newsie.
         </p>
-
         <p>
-          <strong>Podobne newsy: <span id="criteria-no-similar">BRAK</span></strong><span id="criteria-found-similar">Znaleziono portale, które napisały na podobny temat:</span>
+          <strong>Podobne newsy: <span>[[ similarNewsDecision ]]</span></strong>
           <ul id="criteria-neighbours-list">
+            <li v-for="news in similarNewsList">
+              <a href="#">[[ news ]]</a>
+            </li>
           </ul>
         </p>
       </div>
@@ -112,13 +83,10 @@
   </div>
 
   <div class="card">
-    <div class="card-header" id="eval-clickbaits" data-toggle="collapse" data-target="#collapseClickbaits">
+    <div class="card-header" id="eval-clickbaits" data-toggle="collapse" data-target="#collapse-clickbaits">
       <h5 class="mb-0 d-flex justify-content-between">
         <span>
-          <i class="fas fa-spinner fa-pulse criteria-spinner"></i>
-          <i class="fas fa-times criteria-false"></i>
-          <i class="fas fa-check criteria-true"></i>
-          <i class="fas fa-question-circle criteria-unknown"></i>
+          <i v-bind:class="clickbaitsStateIcon"></i>
           Brak słów-haczyków (tzw. clickbait)
         </span>
         <span>
@@ -126,18 +94,17 @@
         </span>
       </h5>
     </div>
-    <div id="collapseClickbaits" class="collapse collapsed" aria-labelledby="eval-clickbaits" data-parent="#factycznie-criteria">
+    <div id="collapse-clickbaits" class="collapse collapsed" aria-labelledby="eval-clickbaits" data-parent="#fact-criteria">
       <div class="card-body">
         <p>
           Sensacyjne nagłówki i wzbudzające emocje słowa obniżają wiarygodność artykułu. Mogą one być sygnałem, że
           autorowi nie zależy na przekazaniu rzetelnych informacji, ale na przyciągnięciu czytelników.
         </p>
         <p>
-          <strong>Słowa-haczyki:
-            <span id="clickbaits-none">BRAK</span>
-            <span id="clickbaits-few">NIEWIELE</span>
-            <span id="clickbaits-plenty">DUŻO</span></strong>
-          <span id="clickbait-list"></span>
+          <strong>Słowa-haczyki: <span>[[ clickbaitsDecision ]]</span></strong>
+        </p>
+        <p>
+          <span>[[ clickbaitsString ]]</span>
         </p>
       </div>
     </div>
