@@ -1,9 +1,3 @@
-{# nie lepiej dać to w oknie ze scrollem? #}
-<div class="container" id="analyzed-text">
-  <h4 class="text-center">[[ analyzedHeader ]]</h4>
-  <div>[[ analyzedBody ]]</div>
-</div>
-
 // import Vue from 'vue'
 // import Vuex from 'vuex'
 //
@@ -27,57 +21,56 @@ let sourceRelevanceUnknown = 0,
   sourceRelevanceUncertain = 1,
   sourceRelevanceSoso = 2,
   sourceRelevanceTrusted = 3;
-// "NIEZNANE ŹRÓDŁO", "NIEPEWNE ŹRÓDŁO", "PRZYZWOITE ŹRÓDŁO", "ZAUFANE ŹRÓDŁO"
-// "Brak danych w systemie na temat podanego źródła."
-// "News, który sprawdzasz pochodzi z portalu, na którym można znaleźć fake-newsy lub clickbaity (wniosek na podstawie [X] przeanalizowanych newsów).
-// "News, który sprawdzasz pochodzi z portalu, który przeważnie zawiera wiarygodne informacje, jednak można na nim czasem znaleźć artykuły o wątpliwej jakości (wniosek na podstawie [X] przeanalizowanych newsów).
-// "News, który sprawdzasz pochodzi z portalu, który oceniany jest jako źródło wiarygodnych informacji (wniosek na podstawie [X] przeanalizowanych newsów).
 
 let clickbaitsNone = 0,
   clickbaitsFew = 1,
   clickbaitsPlenty = 2;
 
 let scrollOptions = {
-  // container: '#container',
-  easing: 'ease-in',
-  offset: -90,
-  cancelable: true,
-  onDone: function() {
-    // scrolling is done
-  },
-  onCancel: function() {
-    // scrolling has been interrupted
-  },
-  x: false,
-  y: true
+    // container: '#container',
+    easing: 'ease-in',
+    offset: -90,
+    cancelable: true,
+    onDone: function() {
+      // scrolling is done
+    },
+    onCancel: function() {
+      // scrolling has been interrupted
+    },
+    x: false,
+    y: true
 }
 
 let authorState = unknown;
 
-  data: function () {
-    return {
-      searchURL: null,
-      loading: false,
-      showAnalysis: false,
+let vm = new Vue({
+  el: '#container',
+  // components: {
+  //   FontAwesomeIcon,
+  //   FontAwesomeLayers
+  // },
+  data: {
+    searchURL: "",
+    loading: false,
+    showAnalysis: false,
 
-      authorState: unknown,
-      newsAuthorDecision: noneString,
+    authorState: unknown,
+    newsAuthorDecision: noneString,
 
-      sourceRelevanceState: unknown,
-      sourceRelevance: sourceRelevanceUnknown,
+    sourceRelevanceState: unknown,
+    sourceRelevance: sourceRelevanceUnknown,
 
-      similarNewsState: unknown,
-      similarNewsDecision: noneString,
-      // <span id="criteria-no-similar">BRAK</span></strong><span id="criteria-found-similar">Znaleziono portale, które napisały na podobny temat:</span>
-      similarNewsList: [],
+    similarNewsState: unknown,
+    similarNewsDecision: noneString,
+    // <span id="criteria-no-similar">BRAK</span></strong><span id="criteria-found-similar">Znaleziono portale, które napisały na podobny temat:</span>
+    similarNewsList: [],
 
-      analyzedHeader: null,
-      analyzedBody: null,
+    analyzedHeader: null,
+    analyzedBody: null,
 
-      clickbaitsState: unknown,
-      clickbaitsDecision: noneString,
-      clickbaitsString: noneString
-    }
+    clickbaitsState: unknown,
+    clickbaitsDecision: noneString,
+    clickbaitsString: noneString
   },
   computed: {
     authorIcon: function () {
@@ -130,7 +123,7 @@ let authorState = unknown;
     }
   },
   methods: {
-    factCheck: function(url) {
+    factCheck: function (url) {
       this.authorState = this.sourceRelevanceState = this.similarNewsState = this.clickbaitsState = loading;
       this.loading = true;
       this.showAnalysis = true;
@@ -143,7 +136,7 @@ let authorState = unknown;
       }
 
       this.$http
-        .get('/api/document/evaluation', {params: params}).then(function (response) {
+      .get('/api/document/evaluation', {params: params}).then(function (response) {
         let container = this.$el.querySelector("#fact-analysis");
         // let navbarHeight = this.$refs.factNavbar.clientHeight;
         // scrollOptions.offset = - navbarHeight;
@@ -172,3 +165,4 @@ let authorState = unknown;
       this.factCheck(this.searchURL);
     }
   }
+})

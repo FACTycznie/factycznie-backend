@@ -24,8 +24,8 @@ body {
 
 h3 {
   color: $heading-blue;
-  margin-top: 30px;
-  margin-bottom: 20px;
+  padding-top: 30px;
+  padding-bottom: 20px;
 }
 
 #fact-navbar {
@@ -110,17 +110,11 @@ h3 {
   border-radius: 0px;
   cursor: pointer;
 
-  .criteria-spinner {
-    display: none;
-  }
-
   .criteria-true {
     color: $true-green;
-    display: none;
   }
   .criteria-false {
     color: $false-red;
-    display: none;
   }
 
   h5 {
@@ -139,20 +133,25 @@ h3 {
  * Analizowany news
  */
 
-#analyzed-container {
+#analyzed-text {
   background: #ffffff;
   padding: 20px;
+
+  h4 {
+    color: $navbar-red;
+    padding: 20px;
+  }
+
+  div {
+    max-height: 50vh;
+    overflow-y: scroll;
+    white-space: pre-wrap;
+  }
 }
 
-#analyzed-header {
-  color: $navbar-red;
-  padding: 20px;
-}
 
-#analyzed-text {
-  max-height: 50vh;
-  overflow-y: scroll;
-}
+
+
 
 /*******************************
  * Oceń wiarygodność

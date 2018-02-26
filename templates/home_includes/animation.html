@@ -3,13 +3,13 @@
   </canvas>
   <div id="search-box" class="text-center">
     <h5>Chcesz wiedzieć czy news, który czytasz jest wiarygodny?</h5>
-    <form class="form-inline justify-content-center" id="search-form">
+    <form class="form-inline justify-content-center" @submit="factCheckURL">
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="wklej swój link" />
+        <input type="url" class="form-control" placeholder="wklej swój link" v-model="searchURL" />
         <button class="btn btn-light-green" type="submit">Sprawdź</button>
       </div>
     </form>
-    <p>Nie masz newsa? Sprawdź przykładowy! <a href="#" id="search-random">Kliknij tutaj</a></p>
+    <p>Nie masz newsa? Sprawdź przykładowy! <a href="#" @click="factCheckNoURL" id="search-random">Kliknij tutaj</a></p>
   </div>
 </div>
 <div class="source hidden" style="border-width: 0px 0px 0px 1px;"></div>
