@@ -39,3 +39,6 @@ eli5
 requests
 Scrapy
 git+https://github.com/FactsCoin/factscraper.git
+
+dateparser
+tqdm

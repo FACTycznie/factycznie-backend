@@ -25,7 +25,7 @@ SECRET_KEY = 'm$yzlopma3st9(cts7z3k@l^j4@!ejg6=zdrzt)x*qjchtb@s$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['backend', 'localhost']
 
 
 # Application definition
@@ -176,4 +176,9 @@ CORS_ALLOW_HEADERS = (
     'origin',
     'authorization',
     'x-csrftoken'
+)
+
+CORS_ORIGIN_WHITELIST = (
+    'google.com',
+    'localhost:5000',
 )
