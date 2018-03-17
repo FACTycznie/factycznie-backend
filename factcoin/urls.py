@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.conf.urls import include, url
 
 from .api import DocumentList, DocumentDetail, DocumentEvaluation, DocumentVote
-from .views import HomeView
 
 
 api_urlpatterns = [
@@ -28,7 +27,6 @@ api_urlpatterns = [
 ]
 
 urlpatterns = [
-    url(r'^$', HomeView.as_view(), name='home'),
     url(r'^search/', include('haystack.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(api_urlpatterns))
