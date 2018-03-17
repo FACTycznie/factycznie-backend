@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t factcoin .
+docker build -t factycznie_backend .
