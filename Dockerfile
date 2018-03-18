@@ -1,7 +1,7 @@
 FROM python:3
 
 RUN apt-get update
-RUN apt-get install -y libicu-dev
+RUN apt-get install -y libicu-dev screen
 
 WORKDIR /app
 
