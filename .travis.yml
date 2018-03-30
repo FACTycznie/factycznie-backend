@@ -1,25 +1,20 @@
-language: python
-install:
-    - pip install -r requirements.txt
-branches:
-    only:
-        - master
-script: coverage run --source=factcoin manage.py test --settings=factcoin.settings.test
-after_success:
-    - coveralls
-
-
 sudo: required
 
 services:
   - docker
 
+language: python
+python:
+    - "3.6"
+
 before_install:
   - docker build -t factycznie/factycznie-backend .
 
-script:
-  - coverage run --source=moonsheep setup.py test
-  - coveralls
+install:
+    - pip install -r requirements.txt
+script: coverage run --source=factcoin manage.py test --settings=factcoin.settings.test
+after_success:
+    - coveralls
 
 deploy:
   provider: script
