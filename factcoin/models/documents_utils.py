@@ -1,7 +1,6 @@
 import os, pickle
 from factcoin.settings.base import BASE_DIR
 from polyglot.text import Text
-import numpy as np
 import factscraper
 from urllib.parse import urlparse, urlunparse
 import re

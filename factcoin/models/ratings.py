@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from factcoin.models.documents import Document
+
+from .documents import Document
 
 
 class Rating(models.Model):

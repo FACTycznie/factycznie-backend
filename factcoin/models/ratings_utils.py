@@ -2,16 +2,14 @@ from django.db.models import Avg
 
 import numpy as np
 
-import factcoin
+from .ratings import Rating
+from .votes import Vote
 
 DOCUMENT_SCORE_RATIO = 0.5
 VOTES_SCORE_RATIO = 0.5
 
 
 def update_rating(document):
-    Rating = factcoin.models.ratings.Rating
-    Vote = factcoin.models.votes.Vote
-
     last_rating = Rating.objects.filter(document=document).last()
     clickbait_score, neighbours_score, neighbours_count, current_rating, authors_score = document.get_evaluation()
     document_score = np.mean([clickbait_score, neighbours_score, authors_score])
