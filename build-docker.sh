@@ -1,3 +1,3 @@
 #!/bin/sh
 
-docker build -t factycznie/factycznie_backend .
+docker build -t factycznie_backend .
