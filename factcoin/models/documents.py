@@ -1,9 +1,11 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from factcoin.models.documents_utils import download_url, get_entities, get_feature_tokens, get_smiliar_documents
-from factcoin.models.documents_utils import get_clickbait_rating, normalize_url, get_clickbait_spans
-from factcoin.models.ratings_utils import update_rating, get_neighbours_score
+
+from .documents_utils import download_url, get_entities, get_feature_tokens, get_smiliar_documents
+from .documents_utils import get_clickbait_rating, normalize_url, get_clickbait_spans
+from .ratings_utils import update_rating, get_neighbours_score
+from .votes import Vote
 
 import factcoin
 
@@ -56,7 +58,6 @@ class Document(models.Model):
 
 
     def add_vote(self, score):
-        Vote = factcoin.models.votes.Vote
         vote = Vote.objects.create(document=self, score=score)
         self.update_rating()
         return vote

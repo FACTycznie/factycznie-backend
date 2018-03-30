@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from factcoin.models.documents import Document
+
+from .documents import Document
 
 
 class Vote(models.Model):
@@ -9,5 +10,4 @@ class Vote(models.Model):
     score = models.FloatField(default=0)
 
     def __str__(self):
-        return "{} -> {}".format(self.document, self.vote)
-
+        return "{} -> {}".format(self.document, self.score)

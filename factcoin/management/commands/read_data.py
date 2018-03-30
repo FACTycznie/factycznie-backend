@@ -3,6 +3,7 @@ from factcoin.models import Document
 import json
 from tqdm import tqdm
 
+
 class Command(BaseCommand):
     help = 'Read new data'
 
