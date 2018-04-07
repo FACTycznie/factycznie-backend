@@ -1,1 +1,0 @@
-web: newrelic-admin run-program gunicorn factcoin.wsgi -w 2 --preload --log-level=INFO

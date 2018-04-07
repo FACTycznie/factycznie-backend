@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 ENV POLYGLOT_DATA_PATH "/app/shared/"
-ENV DJANGO_SETTINGS_MODULE "factcoin.settings.dev"
+ENV DJANGO_SETTINGS_MODULE "factcoin.settings.production"
 ENV PORT 8000
 EXPOSE 8000
 

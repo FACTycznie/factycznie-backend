@@ -5,22 +5,22 @@ services:
 
 language: python
 python:
-    - "3.6"
+  - "3.6"
 
 branches:
-    only:
-        - master
+  only:
+    - master
 
 before_install:
   - docker build -t factycznie/factycznie-backend .
 
 install:
-    - pip install -r requirements.txt
+  - pip install -r requirements.txt
 
 script: coverage run --source=factcoin manage.py test --settings=factcoin.settings.test
 
 after_success:
-    - coveralls
+  - coveralls
 
 deploy:
   provider: script
