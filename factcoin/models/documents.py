@@ -5,7 +5,9 @@ from factcoin.models.documents_utils import download_url, get_entities, get_feat
 from factcoin.models.documents_utils import get_clickbait_rating, normalize_url, get_clickbait_spans
 from factcoin.models.ratings_utils import update_rating, get_neighbours_score
 
-import factcoin
+from factcoin.models.connections import Connection
+from factcoin.models.ratings import Rating
+from factcoin.models.votes import Vote
 
 
 class Document(models.Model):
@@ -24,7 +26,6 @@ class Document(models.Model):
 
     @staticmethod
     def recreate_connections():
-        Connection = factcoin.models.connections.Connection
         for c in Connection.objects.all():
             c.delete()
 
@@ -33,17 +34,14 @@ class Document(models.Model):
 
     @property
     def rating_score(self):
-        Rating = factcoin.models.ratings.Rating
-        rating =  Rating.objects.filter(document=self).last()
+        rating = Rating.objects.filter(document=self).last()
         if rating:
             return rating.score
         else:
             return None
 
-
     @property
     def connections(self):
-        Connection = factcoin.models.connections.Connection
         return Connection.get_document_connections(self)
 
     @property
@@ -54,25 +52,19 @@ class Document(models.Model):
             result.append((other.id, other.title, other.url, c.score))
         return result
 
-
     def add_vote(self, score):
-        Vote = factcoin.models.votes.Vote
         vote = Vote.objects.create(document=self, score=score)
         self.update_rating()
         return vote
-
 
     def update_rating(self):
         rating = update_rating(self)
         return rating
 
-
     def get_clickbait_spans(self):
         return get_clickbait_spans(self)
 
-
     def get_similar_documents(self):
-        Connection = factcoin.models.connections.Connection
         ids, scores = get_smiliar_documents(self)
         document_scores = dict(zip(ids, scores))
 
@@ -82,7 +74,6 @@ class Document(models.Model):
             if score > 0.1:
                 Connection.create(self, document, score)
         return documents
-
 
     def get_evaluation(self):
         authors_score = 0
@@ -97,15 +88,16 @@ class Document(models.Model):
 
         return clickbait_score, neighbours_score, neighbours_count, current_rating, authors_score
 
-
     @staticmethod
     def create(title, content, url, timestamp="", authors=""):
-        document = Document.objects.create(title=title,
-                                           content="",
-                                           raw_content=content,
-                                           authors=authors)
+        document = Document.objects.create(
+            title=title,
+            content="",
+            raw_content=content,
+            authors=authors
+        )
 
-        #timestamp = timestamp,
+        # timestamp = timestamp,
 
         document.authors = " ".join(authors)
         document.content = " ".join(get_feature_tokens(content))
@@ -116,7 +108,6 @@ class Document(models.Model):
         document.people = " ".join(entities.get("I-PER", ""))
         document.localizations = " ".join(entities.get("I-LOC", ""))
         return document
-
 
     @staticmethod
     def add_document_from_url(url):
@@ -133,7 +124,6 @@ class Document(models.Model):
             document.get_similar_documents()
             document.save()
             return document, True
-
 
     @staticmethod
     def add_document_from_json(json_data):
