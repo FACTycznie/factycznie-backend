@@ -134,9 +134,11 @@ class Document(models.Model):
             document.get_similar_documents()
             return document, False
         else:
-            document = Document.create(json_data["title"], json_data["text"],
-                                       normalize_url(json_data["url"]), json_data["timestamp"],
-                                       json_data["authors"])
+            document = Document.create(json_data.get("title"),
+                                       json_data.get("text"),
+                                       normalize_url(json_data.get("url")), 
+                                       json_data.get("timestamp"),
+                                       json_data.get("authors"))
             document.get_similar_documents()
             document.save()
             return document, True
