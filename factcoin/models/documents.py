@@ -7,7 +7,6 @@ from factcoin.models.ratings_utils import update_rating, get_neighbours_score
 
 from factcoin.models.connections import Connection
 from factcoin.models.ratings import Rating
-from factcoin.models.votes import Vote
 
 
 class Document(models.Model):
@@ -53,6 +52,7 @@ class Document(models.Model):
         return result
 
     def add_vote(self, score):
+        from factcoin.models.votes import Vote
         vote = Vote.objects.create(document=self, score=score)
         self.update_rating()
         return vote

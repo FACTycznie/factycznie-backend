@@ -1,13 +1,12 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from factcoin.models.documents import Document
 from django.db.models import Q
 
 
 class Connection(models.Model):
-    document1 = models.ForeignKey(Document, on_delete=models.CASCADE, related_name="+")
-    document2 = models.ForeignKey(Document, on_delete=models.CASCADE, related_name="+")
+    document1 = models.ForeignKey('Document', on_delete=models.CASCADE, related_name="+")
+    document2 = models.ForeignKey('Document', on_delete=models.CASCADE, related_name="+")
     score = models.FloatField(default=0)
 
     def __str__(self):
@@ -24,7 +23,6 @@ class Connection(models.Model):
     @staticmethod
     def get_document_connections(document):
         return Connection.objects.filter(Q(document1=document) | Q(document2=document))
-
 
     @staticmethod
     def create(document1, document2, score):
